@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.senac.easypark.model.enums.TipoAcesso;
 
@@ -25,6 +26,9 @@ public class AcessoService implements UserDetailsService {
 
     @Autowired
     private AcessoRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AcessoDTO save(AcessoDTO userDTO) {
 
@@ -100,6 +104,19 @@ public class AcessoService implements UserDetailsService {
 
         // Mapeando o DTO para a entidade User
         Acesso user = AcessoMapper.toEntity(userDTO);
+
+        // Se uma nova senha foi fornecida, criptografa-a
+        if (userDTO.getSenha() != null && !userDTO.getSenha().isEmpty()) {
+            user.setSenha(passwordEncoder.encode(userDTO.getSenha()));
+        } else {
+            // Se não foi fornecida senha, mantém a senha atual
+            user.setSenha(userSalvo.getSenha());
+        }
+
+        // Se não foi fornecido username, mantém o atual
+        if (user.getUsername() == null || user.getUsername().isEmpty()) {
+            user.setUsername(userSalvo.getUsername());
+        }
 
         // Copiando as propriedades do objeto User atualizado, exceto o "id"
         BeanUtils.copyProperties(user, userSalvo, "id");

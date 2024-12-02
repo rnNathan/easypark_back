@@ -53,9 +53,10 @@ public class AcessoController {
         return ResponseEntity.ok(acessoDTO);
     }
 
-    @PutMapping
-    public ResponseEntity<AcessoDTO> update(@RequestBody AcessoDTO userDTO) throws EstacionamentoException {
+    @PutMapping("/{id}")
+    public ResponseEntity<AcessoDTO> update(@PathVariable Integer id, @RequestBody AcessoDTO userDTO) throws EstacionamentoException {
         validarTipoAcesso.validarAcessoAdmin();
+        userDTO.setId(id);
         AcessoDTO acessoDtoUpdate = acessoService.update(userDTO);
         return ResponseEntity.ok(acessoDtoUpdate);
     }

@@ -6,12 +6,20 @@ import com.senac.easypark.model.dto.UsuarioDTO;
 import com.senac.easypark.model.entities.AssinaturaPlano;
 import com.senac.easypark.model.entities.Plano;
 import com.senac.easypark.model.entities.Usuario;
+import com.senac.easypark.model.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @Component
 public class AssinaturaPlanoMapper {
+
+    @Autowired
+    private static UsuarioRepository usuarioRepository;
+
     public static AssinaturaPlanoDTO toDTO(AssinaturaPlano entity) {
         if (entity == null) {
             return null;
@@ -54,10 +62,13 @@ public class AssinaturaPlanoMapper {
         AssinaturaPlano entity = new AssinaturaPlano();
         entity.setId(dto.getId());
 
+        Optional<Usuario> pegarUser = usuarioRepository.findById(dto.getId());
+
         // Criando objetos com apenas os IDs para relacionamentos
         if (dto.getUsuarioDTO() != null) {
             Usuario usuario = new Usuario();
             usuario.setId(dto.getUsuarioDTO().getId());
+            usuario.setNome(pegarUser.get().getNome());
             entity.setUsuario(usuario);
         }
 

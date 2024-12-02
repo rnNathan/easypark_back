@@ -75,7 +75,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-
    // @PostMapping("/filtro")
    // public List<UsuarioDTO> pesquisarComSeletor(@RequestBody UsuarioSeletor seletor) throws EstacionamentoException {
     //    validarTipoAcesso.validarSeExisteUsuario();
