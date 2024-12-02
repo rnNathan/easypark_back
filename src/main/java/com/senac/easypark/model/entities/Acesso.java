@@ -2,6 +2,8 @@ package com.senac.easypark.model.entities;
 
 import com.senac.easypark.model.enums.TipoAcesso;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,25 +23,33 @@ import java.util.List;
 @Data
 public class Acesso implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String username;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer id;
 
-    @Size(min = 0, max = 999)
-    private String senha;
+        @NotBlank(message ="Nome é obrigatório")
+        private String username;
 
-    private String email;
-    @Enumerated(EnumType.STRING)
-    private TipoAcesso tipoAcesso;
+        @NotBlank
+        @NotNull(message = "Senha é obrigatória")
+        @Size(min = 0, max = 999)
+        private String senha;
 
-    // Construtores, getters e setters
-    public Acesso(String username, String senha, String email, TipoAcesso tipoAcesso) {
-        this.username = username;
-        this.senha = senha;
-        this.tipoAcesso = tipoAcesso;
-        this.email = email;
-    }
+        @NotNull(message = "Email é obrigatório")
+        private String email;
+
+        @NotNull
+        @NotBlank
+        @Enumerated(EnumType.STRING)
+        private TipoAcesso tipoAcesso;
+
+        // Construtores, getters e setters
+        public Acesso(String username, String senha, String email, TipoAcesso tipoAcesso) {
+            this.username = username;
+            this.senha = senha;
+            this.tipoAcesso = tipoAcesso;
+            this.email = email;
+        }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -5,6 +5,7 @@ import com.senac.easypark.model.enums.TipoTicket;
 
 import com.senac.easypark.model.enums.TipoVeiculo;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,9 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull(message = "placa do veiculo não deve ser nula")
     @Column(nullable = false)
     private String placaVeiculo;
-
     private LocalDateTime horaChegada;
     private LocalDateTime horaSaida;
 
