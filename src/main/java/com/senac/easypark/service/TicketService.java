@@ -161,6 +161,7 @@ public class TicketService {
         ticket.setValorTotalPagar(valorTotal.doubleValue());
 
         RelatorioTicketsFechados relatorio = new RelatorioTicketsFechados();
+        relatorio.setTipoTicket(ticket.getTipoTicket());
         relatorio.setHoraEntrada(ticket.getHoraChegada());
         relatorio.setHoraSaida(ticket.getHoraSaida());
         relatorio.setTipoVeiculo(ticket.getTipoVeiculo());
