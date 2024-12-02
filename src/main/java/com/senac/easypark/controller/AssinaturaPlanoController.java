@@ -35,9 +35,9 @@ public class AssinaturaPlanoController {
         return ResponseEntity.ok(assinaturaPlanoService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping("/assinaturas")
     public ResponseEntity<AssinaturaPlanoDTO> create(@RequestBody AssinaturaPlanoDTO dto) throws EstacionamentoException {
-        validarTipoAcesso.validarSeExisteUsuario(); // VALIDA SE TEM UM TOKEN, SÓ CONTINUA SE HOUVER UM TOKEN
+        validarTipoAcesso.validarSeExisteUsuario(); //VALIDA SE TEM UM TOKEN, SÓ CONTINUA SE HOUVER UM TOKEN
         AssinaturaPlanoDTO created = assinaturaPlanoService.create(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
