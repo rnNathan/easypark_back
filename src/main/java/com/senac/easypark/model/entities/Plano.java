@@ -17,22 +17,22 @@ import java.util.List;
 @AllArgsConstructor
 public class Plano {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer id;
 
-    @Enumerated(EnumType.STRING)
-    private TipoPlano tipoPlano;
+        @Enumerated(EnumType.STRING)
+        private TipoPlano tipoPlano;
 
-    @Enumerated(EnumType.STRING)
-    private TipoVeiculo tipoVeiculo;
+        @Enumerated(EnumType.STRING)
+        private TipoVeiculo tipoVeiculo;
 
-    @NotNull
-    private double valorPlano;
+        @NotNull
+        private double valorPlano;
 
-    @OneToMany(mappedBy = "plano", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<AssinaturaPlano> assinaturas;
+        @OneToMany(mappedBy = "plano", cascade = CascadeType.ALL)
+        @JsonIgnore
+        private List<AssinaturaPlano> assinaturas;
 
 
 
