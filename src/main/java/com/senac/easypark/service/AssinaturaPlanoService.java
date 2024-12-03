@@ -81,7 +81,8 @@ public class AssinaturaPlanoService {
     }
 
     private boolean isTipoPlanoValido(TipoPlano tipoPlano) {
-        return tipoPlano == TipoPlano.INTEGRAL ||
+        return  tipoPlano == TipoPlano.MENSAL ||
+                tipoPlano == TipoPlano.INTEGRAL ||
                 tipoPlano == TipoPlano.MANHA ||
                 tipoPlano == TipoPlano.TARDE ||
                 tipoPlano == TipoPlano.NOITE;

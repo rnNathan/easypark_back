@@ -29,14 +29,14 @@ public class RelatorioTicketsFechadosController {
     @GetMapping("/tickets-fechados")
     public ResponseEntity<List<RelatorioTicketsFechadosDTO>> listarRelatorios() throws EstacionamentoException {
         validarTipoAcesso.validarAcessoAdmin();
-        return ResponseEntity.ok(relatorioService.listarRelatorios()); // Você precisará implementar este método no serviço
+        return ResponseEntity.ok(relatorioService.listarRelatorios()); //Você precisará implementar este método no serviço
     }
 
     //Endpoint
     @GetMapping("/tickets-fechados/{id}")
     public ResponseEntity<RelatorioTicketsFechadosDTO> buscarRelatorioPorId(@PathVariable Integer id) throws EstacionamentoException {
         validarTipoAcesso.validarAcessoAdmin();
-        return ResponseEntity.ok(relatorioService.buscarRelatorioPorId(id)); // Você precisará implementar este método no serviço
+        return ResponseEntity.ok(relatorioService.buscarRelatorioPorId(id)); //Você precisará implementar este método no serviço
     }
 
     @GetMapping("/tickets-fchado-tipo/{tipoVeiculo}")

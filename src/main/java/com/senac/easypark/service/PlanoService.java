@@ -30,13 +30,9 @@ public class PlanoService {
     // Criar um novo plano
     @Transactional
     public PlanoDTO criarPlano(PlanoDTO planoDTO) {
-        // Validação dos campos
         validarPlano(planoDTO);
-        // Conversão para entidade
         Plano plano = PlanoMapper.convertToEntity(planoDTO);
-        // Salva no banco de dados
         Plano planoSalvo = planoRepository.save(plano);
-        // Converte de volta para DTO e retorna
         return PlanoMapper.convertToDTO(planoSalvo);
     }
 

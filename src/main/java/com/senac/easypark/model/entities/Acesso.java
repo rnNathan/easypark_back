@@ -38,8 +38,7 @@ public class Acesso implements UserDetails {
         @NotNull(message = "Email é obrigatório")
         private String email;
 
-        @NotNull
-        @NotBlank
+        @NotNull(message = "O tipo de acesso é obrigatório.")
         @Enumerated(EnumType.STRING)
         private TipoAcesso tipoAcesso;
 

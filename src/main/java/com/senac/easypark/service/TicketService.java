@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,7 +70,7 @@ public class TicketService {
         }
 
         //hora tual
-        LocalTime horaAtual = LocalTime.now();
+        LocalDateTime horaAtual = LocalDateTime.now();
 
         //Busca os veículos com assinatura válida
         List<Veiculo> veiculos = veiculoRepository.buscarVeiculoComAssinaturaValida(ticket.getPlacaVeiculo());
@@ -84,25 +85,23 @@ public class TicketService {
 
         //Se encontrar veículos com assinatura válida
         if (!veiculos.isEmpty()) {
-            Veiculo veiculo = veiculos.get(0);  //Considerando que pegamos o primeiro veículo válido
-
-            //Verifica as assinaturas do usuário para encontrar um plano válido
+            Veiculo veiculo = veiculos.get(0);
             for (AssinaturaPlano assinatura : veiculo.getUsuario().getAssinaturas()) {
-//                Ele busca o tipo do plano e pega o horario definido no enum e compara com a hora atual
-//                Só continua se bater o horario
-                if (assinatura.getPlano().getTipoPlano().contemHorario(horaAtual)) {
-                    //Se encontrar um plano válido, define o ticket como mensalista
-                    ticketEntity.setTipoTicket(TipoTicket.TICKET_MENSALISTA);
-                    veiculo.setOcupandoVaga(true);
-                    veiculoRepository.save(veiculo);  //Salva o estado do veículo
-                    //Para o loop ao encontrar o primeiro plano válido
-                }else {
-                    ticketEntity.setTipoTicket(TipoTicket.TICKET_AVULSO);
+                if (assinatura.getPlano().getTipoPlano().equals(veiculo.getTipoVeiculo())) {
+                    if (horaAtual.isAfter(assinatura.getPlano().getHoraInicioEntrada()) && horaAtual.isBefore((assinatura.getPlano().getHoraFimEntrada()))) {
+                        //Se encontrar um plano válido, define o ticket como mensalista
+                        ticketEntity.setTipoTicket(TipoTicket.TICKET_MENSALISTA);
+                        veiculo.setOcupandoVaga(true);
+
+                        veiculoRepository.save(veiculo);  //Salva o estado do veículo
+                        //Para o loop ao encontrar o primeiro plano válido
+                    } else {
+                        ticketEntity.setTipoTicket(TipoTicket.TICKET_AVULSO);
+                    }
                 }
 
             }
         } else {
-            //Se nenhum veículo com assinatura válida for encontrado, cria ticket avulso
             ticketEntity.setTipoTicket(TipoTicket.TICKET_AVULSO);
         }
 
@@ -249,9 +248,9 @@ public class TicketService {
                     }
 
                     //VERIFICAR PARA VER SE PASSOU O HORARIO DO PLANO
-                    LocalTime horaLimitePlano = assinaturaPlano.getPlano().getTipoPlano().getHoraFim();  // Hora final do plano
+                    LocalDateTime horaLimitePlano = assinaturaPlano.getPlano().getHoraFimEntrada();  // Hora final do plano
 
-                    if (ticket.getHoraSaida().toLocalTime().isAfter(horaLimitePlano)) {
+                    if (ticket.getHoraSaida().toLocalDate().isAfter(ChronoLocalDate.from(horaLimitePlano))) {
                         //AQUI, SE PASSAR DO HORARIO DO PLANO ELE PAGA A DIFERENÇA POR VEICULO
                         Duration horasExtras = Duration.between(horaLimitePlano, ticket.getHoraSaida().toLocalTime());
                         long horasExtrasCalculadas = horasExtras.toHours();

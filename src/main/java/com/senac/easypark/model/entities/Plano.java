@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -28,9 +29,15 @@ public class Plano {
         private TipoVeiculo tipoVeiculo;
 
         @NotNull
+        private LocalDateTime horaInicioEntrada;
+
+        @NotNull
+        private LocalDateTime horaFimEntrada;
+
+        @NotNull
         private double valorPlano;
 
-        @OneToMany(mappedBy = "plano", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "plano", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         @JsonIgnore
         private List<AssinaturaPlano> assinaturas;
 

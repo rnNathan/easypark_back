@@ -102,13 +102,4 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
 
-   /* private String username;
-
-    @Size(min = 0, max = 999)
-    private String senha;
-
-    private String email;
-    @Enumerated(EnumType.STRING)
-    private TipoAcesso tipoAcesso;*/
-
 }
