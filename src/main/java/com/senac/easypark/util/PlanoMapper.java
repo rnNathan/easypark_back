@@ -18,6 +18,8 @@ public class PlanoMapper {
         Plano plano = new Plano();
         plano.setId(planoDTO.getId());
         plano.setTipoPlano(planoDTO.getTipoPlano());
+        plano.setHoraFimEntrada(planoDTO.getDataPagamento());
+        plano.setHoraInicioEntrada(planoDTO.getDataVencimento());
         plano.setTipoVeiculo(planoDTO.getTipoVeiculo());
         plano.setValorPlano(planoDTO.getValorPlano());
 
@@ -31,6 +33,8 @@ public class PlanoMapper {
         }
         PlanoDTO planoDTO = new PlanoDTO();
         planoDTO.setId(plano.getId());
+        planoDTO.setDataPagamento(plano.getHoraInicioEntrada());
+        planoDTO.setDataVencimento(plano.getHoraFimEntrada());
         planoDTO.setTipoPlano(plano.getTipoPlano());
         planoDTO.setTipoVeiculo(plano.getTipoVeiculo());
         planoDTO.setValorPlano(plano.getValorPlano());

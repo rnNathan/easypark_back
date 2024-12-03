@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,9 +15,8 @@ public class PlanoDTO {
     private Integer id;
     private TipoPlano tipoPlano;
     private TipoVeiculo tipoVeiculo;
-    /*private LocalDateTime dataPagamento;
+    private LocalDateTime dataPagamento;
     private LocalDateTime dataVencimento;
-    private boolean status;*/
     private double valorPlano;
 
 }
